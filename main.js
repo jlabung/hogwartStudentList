@@ -69,6 +69,15 @@ function prepareObjects(jsonData) {
   displayList(allStudents);
 }
 
+function displayList(students) {
+  // clear the list
+  document.querySelector(".container").innerHTML = "";
+  // build a new list
+  students.forEach(displayStudent);
+  //console.log(allStudents)
+  closeModal();
+}
+
 function preapareObject(jsonObject) {
   // fixing the student list
   const student = Object.create(Student);
@@ -80,12 +89,13 @@ function preapareObject(jsonObject) {
   // console.log(studentName);
   // console.log(houseName);
   let text = studentName.split(" ");
-  if (text.length > 3) {
+  if (text.length < 3) {
     if (text[0]) {
       student.firstName = text[0].substring(0, 1).toUpperCase() + text[0].substring(1).toLowerCase();
     }
     if (text[1]) {
       student.lastName = text[1].substring(0, 1).toUpperCase() + text[1].substring(1).toLowerCase();
+      student.newName = `${student.firstName}${student.lastName}`;
     } else {
       if (text[0]) {
         student.firstName = text[0].substring(0, 1).toUpperCase() + text[0].substring(1).toLowerCase();
@@ -93,16 +103,17 @@ function preapareObject(jsonObject) {
       if (text[1]) {
         student.middleName = text[1].substring(0, 1).toUpperCase() + text[1].substring(1).toLowerCase();
       }
-      if (text[0]) {
+      if (text[2]) {
         student.lastName = text[2].substring(0, 1).toUpperCase() + text[2].substring(1).toLowerCase();
+        student.newName = `${student.firstName}${student.middleName}${student.lastName}`;
       }
     }
   }
   return student;
+  console.log(student);
 }
 function buildList(student) {
   const currentList = allStudents;
-
   displayList(currrentList);
 }
 
@@ -113,7 +124,7 @@ function displayList(students) {
 }
 
 function displayStudent(student) {
-  // console.log(student);
+  console.log(student);
   const template = document.querySelector("template").content;
   const copy = template.cloneNode(true);
   // to show the star
@@ -129,7 +140,7 @@ function displayStudent(student) {
   // to fix the image
 
   if (student.firstName == "Padma") {
-    copy.querySelector("studentPic").src = "images/" + student.lastName.toLowerCase() + "_" + "padme" + ".png";
+    copy.querySelector(".studentPic").src = "images/" + student.lastName.toLowerCase() + "_" + "padme" + ".png";
   } else if (student.lastName == "Patil") {
     copy.querySelector(".studentPic").src = "images/" + student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase() + ".png";
   } else if (student.firstName == "Leanne") {
@@ -137,7 +148,7 @@ function displayStudent(student) {
   } else if (student.lastName == "Finch-fletchley") {
     copy.querySelector(".studentPic").src = "images/" + "fletchley" + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
   } else {
-    copy.querySelector(".studentPic").src = "images/" + student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase() + ".png";
+    copy.querySelector(".studentPic").src = "images/" + student.lastName.toLowerCase() + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
   }
 
   // copy.querySelector(".studentsFull").textContent = student.newName;
@@ -145,16 +156,33 @@ function displayStudent(student) {
 
   copy.querySelector("button").addEventListener("click", function() {
     const modalOpen = document.querySelector(".modal_background");
+    modalOpen.classList.remove("hide");
+
+    //document.querySelector(".modal-content").setAttribute("data-house", student.house);
+
     document.querySelector(".first_name").textContent = `First Name: ${student.firstName}`;
     document.querySelector(".middle_name").textContent = `Middle Name: ${student.middleName}`;
     document.querySelector(".last_name").textContent = `Last Name: ${student.lastName}`;
     document.querySelector(".gender").textContent = `Gender: ${student.gender}`;
-    //document.querySelector(".house").textContent = `House: ${student.house}`;
-    document.querySelector(".modalPic").src = `./images/${student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase() + ".png"}`;
-    document.querySelector(".crest").src = `crest/${student.house.substring(0, 1).toLowerCase() + student.house.substring(1).toLowerCase() + ".png"}`;
+    document.querySelector(".houseName").textContent = `House: ${student.house}`;
+    document.querySelector(".modalPic").src = `images/${student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase() + ".png"}`;
+    //document.querySelector(".crest").src = `crest/${student.house.substring(0, 1).toLowerCase() + student.house.substring(1).toLowerCase() + ".png"}`;
+
+    if (student.firstName == "Padma") {
+      document.querySelector(".modalPic").src = "images/" + student.lastName.toLowerCase() + "_" + "padme" + ".png";
+    } else if (student.lastName == "Patil") {
+      document.querySelector(".modalPic").src = "images/" + student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase() + ".png";
+    } else if (student.firstName == "Leanne") {
+      document.querySelector(".modalPic").src = "images/" + "li_s" + ".png";
+    } else if (student.lastName == "Finch-fletchley") {
+      document.querySelector(".modalPic").src = "images/" + "fletchley" + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
+    } else {
+      document.querySelector(".modalPic").src = "images/" + student.lastName.toLowerCase() + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
+
+      console.log(student.star);
+    }
 
     document.querySelector(".modal_content").dataset.theme = student.house;
-    modalOpen.classList.remove("hide");
   });
   document.querySelector(".container").appendChild(copy);
 }
@@ -322,4 +350,15 @@ function mySort(sortBy, sortDirection) {
   });
 
   displayList(currentList);
+}
+function closeModal() {
+  const modal = document.querySelector(".modal_background");
+  modal.addEventListener("click", () => {
+    modal.classList.add("hide");
+  });
+}
+
+function selectTheme() {
+  document.querySelector("body").setAttribute("houseStyle", this.value);
+  console.log(selectTheme);
 }

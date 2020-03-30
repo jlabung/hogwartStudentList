@@ -5,11 +5,11 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 1rem;
-  max-width: 1300px;
+  /* max-width: 1300px; */
   grid-template-rows: 1fr;
   margin: 5% auto;
   border: 1px solid darkcyan;
-  background-image: url(background-image.jpg);
+  
 }
 article {
   display: flex;
