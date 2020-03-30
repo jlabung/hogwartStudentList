@@ -70,50 +70,34 @@ function prepareObjects(jsonData) {
 }
 
 function preapareObject(jsonObject) {
+  // fixing the student list
   const student = Object.create(Student);
+  const studentName = jsonObject.fullname.trim();
   const houseName = jsonObject.house.trim();
+
   student.house = houseName.substring(0, 1).toUpperCase() + houseName.substring(1).toLowerCase();
   student.gender = jsonObject.gender;
-
-  const letter = jsonObject.fullname
-    .trim()
-    .split("-")
-    .join("");
-  let text = letter.split(" ");
-  text[0] = text[0].split('"').join("");
-  //text[0] = text[0].split("-").join(" ");
-  let firstName = student.firstName;
-  console.log(letter);
-  if (text.length < 3) {
-    console.log(text[2]);
-    // if there is two name
-    // text[0] = first part of the name
-    // text[1] = last part of the name
+  // console.log(studentName);
+  // console.log(houseName);
+  let text = studentName.split(" ");
+  if (text.length > 3) {
     if (text[0]) {
       student.firstName = text[0].substring(0, 1).toUpperCase() + text[0].substring(1).toLowerCase();
     }
     if (text[1]) {
       student.lastName = text[1].substring(0, 1).toUpperCase() + text[1].substring(1).toLowerCase();
-    }
-    student.newName = `${student.firstName} ${student.lastName}`;
-  } else {
-    if (text[0]) {
-      (student.firstName = text[0].substring(0, 1)).toUpperCase() + text[0].toLowerCase();
-    }
-    if (text[1]) {
-      student.middleName = text[1].substring(0, 1).toUpperCase() + text[1].toLowerCase();
-    }
-    if (text[2]) {
-      student.lastName = text[2].substring(0, 1).toUpperCase() + text[1].toLowerCase();
     } else {
-      student.firstName = text[0].indexof(0).toUpperCase() + text[0].toLowerCase();
+      if (text[0]) {
+        student.firstName = text[0].substring(0, 1).toUpperCase() + text[0].substring(1).toLowerCase();
+      }
+      if (text[1]) {
+        student.middleName = text[1].substring(0, 1).toUpperCase() + text[1].substring(1).toLowerCase();
+      }
+      if (text[0]) {
+        student.lastName = text[2].substring(0, 1).toUpperCase() + text[2].substring(1).toLowerCase();
+      }
     }
-    student.newName = `${student.firstName} ${student.middleName} ${student.lastName}`;
   }
-
-  student.image = "http://nepanime.dk/3rdSem/Hogwart_student_list/images/" + student.lastName.toLowerCase() + "_" + student.firstName[0].toLowerCase() + ".png";
-  student.crest = "http://nepanime.dk/3rdSem/Hogwart_student_list/crest" + student.house[0].toUpperCase() + ".png";
-  console.log(student);
   return student;
 }
 function buildList(student) {
@@ -129,29 +113,35 @@ function displayList(students) {
 }
 
 function displayStudent(student) {
-  // create clone
   // console.log(student);
   const template = document.querySelector("template").content;
   const copy = template.cloneNode(true);
-  // let winnerStudent = copy.querySelector("[data-field=winner]");
-  // if (student.winner === true) {
-  //   winnerStudent.classList.remove("grayout");
-  // } else {
-  //   winnerStudent.classList.add("grayout");
-  // }
-  // winnerStudent.addEventListener("click", function() {
-  //   checkWinner(student);
-  // });
+  // to show the star
+  copy.querySelector("[data-field=star]").dataset.star = student.star;
+  if (student.star === true) {
+    copy.querySelector("[data-field=star]").star = student.star;
+  } else {
+    copy.querySelector("[data-field=star]").textContent = "⭐";
+  }
+  copy.querySelector(".studentsFull").textContent = student.newName;
+  copy.querySelector(".houseName").textContent = student.house;
+  copy.querySelector(".studentPic").src = `images/${student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase() + ".png"}`;
+  // to fix the image
 
-  //copy.querySelector(".name").textContent = student.fullName;
+  if (student.firstName == "Padma") {
+    copy.querySelector("studentPic").src = "images/" + student.lastName.toLowerCase() + "_" + "padme" + ".png";
+  } else if (student.lastName == "Patil") {
+    copy.querySelector(".studentPic").src = "images/" + student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase() + ".png";
+  } else if (student.firstName == "Leanne") {
+    copy.querySelector(".studentPic").src = "images/" + "li_s" + ".png";
+  } else if (student.lastName == "Finch-fletchley") {
+    copy.querySelector(".studentPic").src = "images/" + "fletchley" + "_" + student.firstName.substring(0, 1).toLowerCase() + ".png";
+  } else {
+    copy.querySelector(".studentPic").src = "images/" + student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase() + ".png";
+  }
 
-  copy.querySelector(".full_name").textContent = student.newName;
-  //copy.querySelector(".first_name").textContent = student.firstName;
-
-  // copy.querySelector(".middle_name").textContent = student.middleName;
-  // copy.querySelector(".last_name").textContent = student.lastName;
-  //copy.querySelector("name").textContent = student.fullName;
-  copy.querySelector(".house").textContent = student.house;
+  // copy.querySelector(".studentsFull").textContent = student.newName;
+  // copy.querySelector(".studentsFull").textContent = student.newName;
 
   copy.querySelector("button").addEventListener("click", function() {
     const modalOpen = document.querySelector(".modal_background");
@@ -159,9 +149,9 @@ function displayStudent(student) {
     document.querySelector(".middle_name").textContent = `Middle Name: ${student.middleName}`;
     document.querySelector(".last_name").textContent = `Last Name: ${student.lastName}`;
     document.querySelector(".gender").textContent = `Gender: ${student.gender}`;
-    document.querySelector(".house").textContent = `House: ${student.house}`;
-    document.querySelector("img").src = student.image;
-    document.querySelector(".crest").src = student.crest;
+    //document.querySelector(".house").textContent = `House: ${student.house}`;
+    document.querySelector(".modalPic").src = `./images/${student.lastName.toLowerCase() + "_" + student.firstName.toLowerCase() + ".png"}`;
+    document.querySelector(".crest").src = `crest/${student.house.substring(0, 1).toLowerCase() + student.house.substring(1).toLowerCase() + ".png"}`;
 
     document.querySelector(".modal_content").dataset.theme = student.house;
     modalOpen.classList.remove("hide");

@@ -27,23 +27,30 @@
     <main class="container"></main>
     <template>
       <article id="nameList">
-        <div id="nameList">
-          <p class="full_name"></p>
-          <p class="house"></p>
-        </div>
+        <img class="studentPic" />
+        <div data-field="star">⭐</div>
+        <p class="studentsName"></p>
+        <p class="studentsMiddle"></p>
+        <p class="studentsLast"></p>
+        <p class="studentsFull"></p>
+        <p class="gender"></p>
+        <p class="houseName"></p>
+        <button>More</button>
+        <button class="expell">Expell</button>
         <button>See More</button>
       </article>
     </template>
 
     <div class="modal_background hide">
       <div class="modal_content" data-theme="">
-        <img class="profilePic" src="" alt="profile" />
-        <img class="crest" src="" alt="house crest" />
-        <p class="first_name"></p>
-        <p class="middle_name"></p>
-        <p class="last_name"></p>
-        <p class="house"></p>
-        <p class="gender"></p>
+        <img class="crest" />
+        <img id="imagePrefect" />
+        <p class="first_name" houseStyle="">first name here</p>
+        <p class="middle_name">middle name here</p>
+        <p class="last_name">last name here</p>
+        <p class="modalPrefect">Is the student a Prefect or not</p>
+        <p class="modalExpelled">Was the student expelled or not</p>
+        <img class="modalPic" src="" />
       </div>
     </div>
 
