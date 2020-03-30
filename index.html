@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="main.js"></script>
+
+    <title>Student List</title>
+  </head>
+  <body>
+    <p>
+      Filter:
+      <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
+      <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
+      <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
+      <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
+      <button class="filter" data-action="filter" data-filter="all">all</button>
+    </p>
+    <div class="sort_buttons">
+      <button class="sort" data-action="sort" data-sort-direction="asc" data-sort="firstName">First name</button>
+      <button class="sort" data-action="sort" data-sort-direction="asc" data-sort="lastName">Last name</button>
+      <button class="sort" data-action="sort" data-sort-direction="asc" data-sort="gender">Gender</button>
+      <button class="sort" data-action="sort" data-sort-direction="asc" data-sort="house">House</button>
+    </div>
+    <main class="container"></main>
+    <template>
+      <article id="nameList">
+        <div id="nameList">
+          <p class="full_name"></p>
+          <p class="house"></p>
+        </div>
+        <button>See More</button>
+      </article>
+    </template>
+
+    <div class="modal_background hide">
+      <div class="modal_content" data-theme="">
+        <img class="profilePic" src="" alt="profile" />
+        <img class="crest" src="" alt="house crest" />
+        <p class="first_name"></p>
+        <p class="middle_name"></p>
+        <p class="last_name"></p>
+        <p class="house"></p>
+        <p class="gender"></p>
+      </div>
+    </div>
+
+    <!-- modal for  only one winner -->
+
+    <!-- <div id="winners" class="modal">
+      <div class="dialogcontent">
+        <button class="closebutton">close</button>
+        <h1>You can only have two winner!</h1>
+        <h2>Remove one winner to add another</h2>
+        <p><button class="removebutton1" data-action="remove1">remove</button> <span class="student1">NAME, the TYPE</span></p>
+        <p><button class="removebutton2" data-action="remove2">remove</button> <span class="student2">NAME, the TYPE</span></p>
+      </div>
+    </div>
+
+    <div id="oneKind" class="modal">
+      <div class="dialogcontent">
+        <button class="closebutton">close</button>
+        <h1>You can only have one winner of each gender</h1>
+        <h2>Remove one winner to add another</h2>
+        <p><button class="removebutton1" data-action="remove1">remove</button> <span class="student1">NAME, the TYPE</span></p>
+      </div>
+    </div> -->
+  </body>
+</html>
